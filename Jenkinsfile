@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('git_clone') {
             steps {
-                git 'https://github.com/kamilzaborowski/Frontend'
+                checkout scm
             }
         }
         stage('install_requirements') {
