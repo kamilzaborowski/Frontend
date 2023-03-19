@@ -25,20 +25,20 @@ pipeline {
                 sh 'python3 -m pytest --cov=. --cov-report xml:test-results/coverage.xml --junitxml=test-results/pytest-report.xml'
             }
         }
-       // stage("build & SonarQube analysis") {
-       //     steps {
-        //      withSonarQubeEnv('SonarQube') {
-       //         sh "${scannerHome}/bin/sonar-scanner"
-       //       }
-       //     }
-        //  }
-    //    stage("Quality Gate") {
-     //       steps {
-        //      timeout(time: 1, unit: 'MINUTES') {
-      //          waitForQualityGate abortPipeline: true 
-        //      }
-       //     }
-      //  }
+        stage("build & SonarQube analysis") {
+            steps {
+              withSonarQubeEnv('SonarQube') {
+                sh "${scannerHome}/bin/sonar-scanner"
+              }
+            }
+          }
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true 
+              }
+            }
+        }
         stage('Build application image') {
             steps {
                 script {
